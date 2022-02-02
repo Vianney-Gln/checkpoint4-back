@@ -1,5 +1,5 @@
 const factsRouter = require("express").Router();
-const { getFacts, getOneFact } = require("../models/facts");
+const { getFacts, getOneFact, postFacts } = require("../models/facts");
 
 //Route getting facts
 factsRouter.get("/", (req, res) => {
@@ -21,6 +21,20 @@ factsRouter.get("/:id", (req, res) => {
     })
     .catch((err) => {
       res.status(500).send(err);
+      console.log(err);
+    });
+});
+
+//Route posting fact's
+factsRouter.post("/", (req, res) => {
+  const { joke, id_category } = req.body;
+
+  postFacts({ joke, id_category })
+    .then((result) => {
+      res.status(201).send(`facts id ${result[0].insertId} created`);
+    })
+    .catch((err) => {
+      res.status(401).send(err);
       console.log(err);
     });
 });

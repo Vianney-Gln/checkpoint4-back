@@ -22,4 +22,15 @@ const getOneFact = (id) => {
     .then((result) => result[0][0]);
 };
 
-module.exports = { getFacts, getOneFact };
+//function posting fact's
+
+const postFacts = ({ joke, id_category }) => {
+  return db
+    .query("INSERT INTO facts (joke,id_category) VALUES (?,?)", [
+      joke,
+      id_category,
+    ])
+    .then((result) => result);
+};
+
+module.exports = { getFacts, getOneFact, postFacts };
