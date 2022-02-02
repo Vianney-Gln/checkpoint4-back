@@ -15,7 +15,10 @@ const getFacts = () => {
 
 const getOneFact = (id) => {
   return db
-    .query("SELECT * FROM facts WHERE id = ?", [id])
+    .query(
+      "SELECT * FROM facts INNER JOIN category ON facts.id_category = category.id  WHERE facts.id = ?",
+      [id]
+    )
     .then((result) => result[0][0]);
 };
 
