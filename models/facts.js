@@ -6,7 +6,7 @@ const db = connection.promise();
 const getFacts = () => {
   return db
     .query(
-      "SELECT * FROM facts INNER JOIN category ON facts.id_category = category.id"
+      "SELECT facts.id AS id_joke,facts.joke,category.id AS id_cat,category.name FROM facts INNER JOIN category ON facts.id_category = category.id ORDER BY id_joke ASC"
     )
     .then((result) => result[0]);
 };

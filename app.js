@@ -8,18 +8,12 @@ const connection = require("./db-config");
 const cors = require("cors");
 const { setupRoute } = require("./routes");
 
-//cors options
-const corsOptions = {
-  origin: "http://localhost:3000",
-  credentials: true, // access-control-allow-credentials:true
-  optionSuccessStatus: 200,
-};
-
-// utilisation de cors pour permettre la communication du back avec le front
-app.use(cors(corsOptions));
-
-// Passage des données en json
-app.use(express.json());
+// //cors options
+// const corsOptions = {
+//   origin: "http://localhost:3000",
+//   credentials: true, // access-control-allow-credentials:true
+//   optionSuccessStatus: 200,
+// };
 
 //check connection db
 connection.connect((err) => {
@@ -29,6 +23,12 @@ connection.connect((err) => {
     console.log(`connected as id ${connection.threadId}`);
   }
 });
+
+// utilisation de cors pour permettre la communication du back avec le front
+app.use(cors());
+
+// Passage des données en json
+app.use(express.json());
 
 // routing
 setupRoute(app);
