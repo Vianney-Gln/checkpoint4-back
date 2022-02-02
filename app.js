@@ -1,8 +1,25 @@
+//config express
+
 require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3002;
 const connection = require("./db-config");
+const cors = require("cors");
+const { setupRoute } = require("./routes");
+
+//cors options
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true, // access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+
+// utilisation de cors pour permettre la communication du back avec le front
+app.use(cors(corsOptions));
+
+// Passage des données en json
+app.use(express.json());
 
 //check connection db
 connection.connect((err) => {
@@ -13,9 +30,8 @@ connection.connect((err) => {
   }
 });
 
-//test route
-app.get("/api/chuck/facts", (req, res) => {
-  res.send("Chuck Norris approuve!");
-});
+// routing
+setupRoute(app);
+
 //connection server node
 app.listen(port, () => console.log(`server listening on port ${port}`));
