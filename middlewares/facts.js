@@ -1,4 +1,4 @@
-const { validateInput } = require("../models/facts");
+const { validateInput, getOneFact } = require("../models/facts");
 
 const checkInputFacts = (req, res, next) => {
   const { joke, id_category } = req.body;

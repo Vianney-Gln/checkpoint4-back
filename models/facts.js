@@ -1,6 +1,7 @@
 const connection = require("../db-config");
 const db = connection.promise();
 const Joi = require("joi");
+const res = require("express/lib/response");
 
 //function gettting facts from db
 
@@ -17,7 +18,7 @@ const getFacts = () => {
 const getOneFact = (id) => {
   return db
     .query(
-      "SELECT * FROM facts INNER JOIN category ON facts.id_category = category.id  WHERE facts.id = ?",
+      "SELECT facts.id,facts.joke,category.name FROM facts INNER JOIN category ON facts.id_category = category.id  WHERE facts.id = ?",
       [id]
     )
     .then((result) => result[0][0]);
@@ -43,4 +44,18 @@ const validateInput = (data, forCreation = true) => {
   }).validate(data, { abortEarly: false, allowUnknown: true }).error;
 };
 
-module.exports = { getFacts, getOneFact, postFacts, validateInput };
+//function deleting fact
+
+const deleteOneFactById = (id) => {
+  return db.query("DELETE FROM facts WHERE id = ?", [id]).then((result) => {
+    result;
+  });
+};
+
+module.exports = {
+  getFacts,
+  getOneFact,
+  postFacts,
+  validateInput,
+  deleteOneFactById,
+};
