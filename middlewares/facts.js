@@ -10,4 +10,14 @@ const checkInputFacts = (req, res, next) => {
   }
 };
 
-module.exports = { checkInputFacts };
+const checkInputFactsUpdate = (req, res, next) => {
+  const { joke, id_category } = req.body;
+  const error = validateInput({ joke, id_category }, false);
+  if (error) {
+    res.status(401).json({ validationErrors: error.details });
+  } else {
+    next();
+  }
+};
+
+module.exports = { checkInputFacts, checkInputFactsUpdate };

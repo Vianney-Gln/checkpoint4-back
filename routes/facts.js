@@ -6,7 +6,10 @@ const {
   deleteOneFactById,
   updateOneFact,
 } = require("../models/facts");
-const { checkInputFacts } = require("../middlewares/facts");
+const {
+  checkInputFacts,
+  checkInputFactsUpdate,
+} = require("../middlewares/facts");
 
 //Route getting facts
 factsRouter.get("/", (req, res) => {
@@ -75,7 +78,7 @@ factsRouter.delete("/:id", (req, res) => {
 module.exports = factsRouter;
 
 //Route updating fact's joke or categorie
-factsRouter.put("/:id", (req, res) => {
+factsRouter.put("/:id", checkInputFactsUpdate, (req, res) => {
   updateOneFact(req.body, req.params.id)
     .then(() => {
       res.status(204).send();
