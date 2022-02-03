@@ -4,6 +4,7 @@ const {
   getOneFact,
   postFacts,
   deleteOneFactById,
+  updateOneFact,
 } = require("../models/facts");
 const { checkInputFacts } = require("../middlewares/facts");
 
@@ -26,7 +27,7 @@ factsRouter.get("/:id", (req, res) => {
       if (result) {
         res.status(200).send(result);
       } else {
-        res.status(200).send("error retrieving fact");
+        res.status(401).send("error retrieving fact");
       }
     })
     .catch((err) => {
@@ -63,7 +64,7 @@ factsRouter.delete("/:id", (req, res) => {
             res.status(500).send("error server");
           });
       } else {
-        res.status(200).send("error retrieving fact");
+        res.status(401).send("error retrieving fact");
       }
     })
     .catch((err) => {
@@ -72,3 +73,16 @@ factsRouter.delete("/:id", (req, res) => {
     });
 });
 module.exports = factsRouter;
+
+//Route updating fact's joke or categorie
+factsRouter.put("/:id", (req, res) => {
+  updateOneFact(req.body, req.params.id)
+    .then(() => {
+      res.status(204).send();
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(401).send("error modifying fact");
+    });
+});
+/*Model call */
