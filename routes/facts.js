@@ -13,7 +13,9 @@ const {
 
 //Route getting facts
 factsRouter.get("/", (req, res) => {
-  getFacts()
+  const { name } = req.query;
+  console.log(name);
+  getFacts(name)
     .then((result) => {
       res.status(200).send(result);
     })

@@ -5,11 +5,16 @@ const res = require("express/lib/response");
 
 //function gettting facts from db
 
-const getFacts = () => {
+const getFacts = (name) => {
+  let value = [];
+  let query =
+    "SELECT facts.id AS id_joke,facts.joke,category.id AS id_cat,category.name FROM facts INNER JOIN category ON facts.id_category = category.id";
+  if (name) {
+    query += " WHERE category.name = ?";
+    value.push(name);
+  }
   return db
-    .query(
-      "SELECT facts.id AS id_joke,facts.joke,category.id AS id_cat,category.name FROM facts INNER JOIN category ON facts.id_category = category.id ORDER BY id_joke ASC"
-    )
+    .query(`${query} ORDER BY id_joke ASC`, value)
     .then((result) => result[0]);
 };
 
