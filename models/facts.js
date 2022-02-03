@@ -52,10 +52,19 @@ const deleteOneFactById = (id) => {
   });
 };
 
+//function updating fact's category or joke
+
+const updateOneFact = (factToUpdate, id) => {
+  return db
+    .query("UPDATE facts SET ? WHERE facts.id = ?", [factToUpdate, id])
+    .then((result) => result);
+};
+
 module.exports = {
   getFacts,
   getOneFact,
   postFacts,
   validateInput,
   deleteOneFactById,
+  updateOneFact,
 };
